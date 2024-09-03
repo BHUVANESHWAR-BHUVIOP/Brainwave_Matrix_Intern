@@ -2,7 +2,7 @@
 ## Overview
 This analysis explores sales data to derive insights using various visualizations. The dataset, train.csv, contains details about transactions, including order dates, customer segments, sales amounts, and more.
 
-### Dataset Source and Description:
+## Dataset Source and Description:
 The dataset used in this analysis was sourced from Kaggle, a popular platform for data science competitions and datasets. The dataset, titled Sales Forecasting, was downloaded directly using Kaggle’s API integration. It includes various details about sales transactions such as order dates, customer segments, sales amounts, and more.
 
 ## Columns in the dataset:
@@ -14,7 +14,7 @@ Postal Code: The postal code for delivery, with missing values handled by forwar
 Sales: The total sales amount for each order.<br>
 Additional Columns: (Details based on the dataset specifics, e.g., Quantity, Discount, etc.)
 
-### Acquisition from Kaggle
+## Acquisition from Kaggle
 
 To acquire the dataset, the Kaggle API was used to programmatically download the required file. The following steps were taken:
 
