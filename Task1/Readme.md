@@ -59,153 +59,135 @@ df['Shipping Duration'] = (df['Ship Date'] - df['Order Date']).dt.days
 avg_shipping_duration = df['Shipping Duration'].mean()
 
 ```
-### 1. Sales Over Time
-Type: Line Chart<br>
-Description: Displays the total sales amount over time, showing how sales vary by date.<br>
+### 1. Sales by Customer Segment
+Type: Pie Chart<br>
+Description:  Visualizes total sales for each customer segment to identify key customer groups.<br>
 ### Code:
 ```python
 import pandas as pd
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as ply
 
-# Load dataset
-df = pd.read_csv('retail_sales_dataset.csv')
+df = pd.read_csv("train.csv")
+df
 
-# Convert 'Date' to datetime format
-df['Date'] = pd.to_datetime(df['Date'])
-
-# Aggregate sales by date
-sales_over_time = df.groupby('Date')['Total Amount'].sum().reset_index()
-
-# Plot
-plt.figure(figsize=(12, 6))
-plt.plot(sales_over_time['Date'], sales_over_time['Total Amount'], marker='o')
-plt.title('Sales Over Time')
-plt.xlabel('Date')
-plt.ylabel('Total Amount')
-plt.grid(True)
-plt.xticks(rotation=45)
+plt.figure(figsize=(8, 8))
+colors = sns.color_palette('coolwarm', len(sales_by_segment))
+sales_by_segment.plot(kind='pie', autopct='%1.1f%%', colors=colors, startangle=140)
+plt.title('Sales Distribution by Customer Segment', fontsize=15, fontweight='bold')
+plt.ylabel('')
 plt.tight_layout()
 plt.show()
 ```
-### 2. Sales by Product Category
+### 2.  Sales by Product Category
 Type: Bar Chart<br>
 Description: Shows total sales for each product category.<br>
 ### Code:
 ```python
 import seaborn as sns
 
-# Aggregate sales by product category
-sales_by_category = df.groupby('Product Category')['Total Amount'].sum().reset_index()
-
-# Plot
 plt.figure(figsize=(10, 6))
-sns.barplot(x='Total Amount', y='Product Category', data=sales_by_category, palette='viridis')
-plt.title('Sales by Product Category')
-plt.xlabel('Total Amount')
-plt.ylabel('Product Category')
-plt.tight_layout()
-plt.show()
-```
-
-### 3. Sales by Gender
-Type: Pie Chart<br>
-Description: Visualizes the proportion of total sales by gender.<br>
-### Code:
-```python
-# Aggregate sales by gender
-sales_by_gender = df.groupby('Gender')['Total Amount'].sum().reset_index()
-
-# Plot
-plt.figure(figsize=(8, 8))
-plt.pie(sales_by_gender['Total Amount'], labels=sales_by_gender['Gender'], autopct='%1.1f%%', colors=['#ff9999','#66b3ff'])
-plt.title('Sales by Gender')
-plt.show()
-```
-### 4. Sales by Age
-Type: Bar Chart<br>
-Description: Displays total sales for each age group.<br>
-### Code:
-```python
-# Aggregate sales by age
-sales_by_age = df.groupby('Age')['Total Amount'].sum().reset_index()
-
-# Plot
-plt.figure(figsize=(12, 6))
-sns.barplot(x='Age', y='Total Amount', data=sales_by_age, palette='magma')
-plt.title('Sales by Age')
-plt.xlabel('Age')
-plt.ylabel('Total Amount')
-plt.grid(True)
-plt.tight_layout()
-plt.show()
-```
-
-### 5. Box Plot (Total Amount by Product Category)
-Type: Box Plot<br>
-Description: Shows the distribution and outliers of total amounts for each product category.<br>
-### Code:
-```python
-# Box plot
-plt.figure(figsize=(12, 6))
-sns.boxplot(x='Product Category', y='Total Amount', data=df, palette='Set2')
-plt.title('Box Plot of Total Amount by Product Category')
+colors = sns.color_palette("Set2", len(sales_by_category))
+sales_by_category.plot(kind='bar', color=colors)
+plt.title('Sales by Product Category', fontsize=15, fontweight='bold')
 plt.xlabel('Product Category')
-plt.ylabel('Total Amount')
-plt.xticks(rotation=45)
+plt.ylabel('Total Revenue ($)')
+plt.xticks(rotation=45, fontsize=12)
 plt.tight_layout()
 plt.show()
 ```
 
-### 6. Scatter Plot (Total Amount vs. Quantity)
-Type: Scatter Plot<br>
-Description: Visualizes the relationship between total amount and quantity, color-coded by product category.<br>
+### 3. Top 10 Sub-Categories by Sales
+Type: Bar Chart<br>
+Description: Visualizes the Top 10 Sub-Categories by Sales.<br>
+### Code:
+```python
+plt.figure(figsize=(10, 6))
+colors = sns.color_palette("Spectral", len(sales_by_sub_category))
+sales_by_sub_category.plot(kind='bar', color=colors)
+plt.title('Top 10 Sub-Categories by Sales', fontsize=15, fontweight='bold')
+plt.xlabel('Sub-Category')
+plt.ylabel('Total Revenue ($)')
+plt.xticks(rotation=45, fontsize=12)
+plt.tight_layout()
+plt.show()
+```
+### 4. Sales by Shipping Mode
+Type: Donut Chart<br>
+Description: Displays total Sales by Shipping Mode.<br>
+### Code:
+```python
+plt.figure(figsize=(8, 8))
+colors = sns.color_palette("pastel", len(sales_by_ship_mode))
+sales_by_ship_mode.plot(kind='pie', autopct='%1.1f%%', colors=colors, startangle=140, wedgeprops={'width': 0.4})
+plt.title('Sales Distribution by Shipping Mode', fontsize=15, fontweight='bold')
+plt.ylabel('')
+plt.tight_layout()
+plt.show()
+```
+
+### 5. Shipping Duration by Shipping Mode
+Type: Box Plot<br>
+Description: Shows the Shipping Duration by Shipping Mode.<br>
+### Code:
+```python
+plt.figure(figsize=(10, 6))
+sns.boxplot(data=df, x='Ship Mode', y='Shipping Duration', palette="coolwarm")
+plt.title('Shipping Duration by Ship Mode', fontsize=15, fontweight='bold')
+plt.xlabel('Ship Mode')
+plt.ylabel('Shipping Duration (days)')
+plt.xticks(fontsize=12)
+plt.tight_layout()
+plt.show()
+```
+
+### 6. Sales Distribution by Region
+Type: Violin Plot<br>
+Description: Visualizes the Sales Distribution by Region.<br>
 ### Code:
 ``` python
-# Scatter plot
 plt.figure(figsize=(10, 6))
-sns.scatterplot(x='Quantity', y='Total Amount', data=df, hue='Product Category', palette='viridis', alpha=0.7)
-plt.title('Scatter Plot of Total Amount vs. Quantity')
-plt.xlabel('Quantity')
-plt.ylabel('Total Amount')
-plt.legend(title='Product Category')
-plt.grid(True)
+sns.violinplot(data=df, x='Region', y='Sales', palette='muted', inner='quartile')
+plt.title('Sales Distribution by Region', fontsize=15, fontweight='bold')
+plt.xlabel('Region')
+plt.ylabel('Sales')
 plt.tight_layout()
 plt.show()
 ```
-### 7. Violin Plot (Total Amount by Age)
-Type: Violin Plot<br>
-Description: Illustrates the distribution of total amounts across different age groups.<br>
+### 7. Monthly Sales Trend
+Type: Line Plot<br>
+Description:  Displays total Sales by Monthly Trends.<br>
 ### Code:
 ```python
-# Violin plot
 plt.figure(figsize=(12, 6))
-sns.violinplot(x='Age', y='Total Amount', data=df, palette='magma')
-plt.title('Violin Plot of Total Amount by Age')
-plt.xlabel('Age')
-plt.ylabel('Total Amount')
-plt.grid(True)
+monthly_sales.plot(kind='line', marker='o', color='orange')
+plt.title('Monthly Sales Trend')
+plt.xlabel('Month')
+plt.ylabel('Total Revenue ($)')
 plt.xticks(rotation=45)
 plt.tight_layout()
 plt.show()
 ```
 
-### 8. Heatmap of Sales by Product Category and Gender
-Type: Heatmap<br>
-Description: Shows the intensity of total sales across different product categories and genders.<br>
+### 8. Seasonal Decompose
+Type: Line Chart<br>
+Description: Shows the Seasonal Trends <br>
 ### Code:
 ```python
-import numpy as np
+from statsmodels.tsa.seasonal import seasonal_decompose
 
-# Pivot table for heatmap
-heatmap_data = df.pivot_table(index='Product Category', columns='Gender', values='Total Amount', aggfunc=np.sum)
+# Set 'Order Date' as the index for time series analysis
+df.set_index('Order Date', inplace=True)
 
-# Heatmap plot
-plt.figure(figsize=(10, 8))
-sns.heatmap(heatmap_data, annot=True, cmap='YlGnBu', fmt='.0f')
-plt.title('Heatmap of Total Amount by Product Category and Gender')
-plt.xlabel('Gender')
-plt.ylabel('Product Category')
-plt.tight_layout()
+# Resample sales data to a daily frequency and fill missing dates
+daily_sales = df['Sales'].resample('D').sum().fillna(0)
+
+# Perform time series decomposition
+decomposition = seasonal_decompose(daily_sales, model='additive')
+
+# Plot the decomposed components
+plt.figure(figsize=(12, 8))
+decomposition.plot()
+plt.suptitle('Time Series Decomposition of Sales Data')
 plt.show()
 ```
 
