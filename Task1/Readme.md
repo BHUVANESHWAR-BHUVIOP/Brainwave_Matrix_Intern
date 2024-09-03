@@ -5,7 +5,7 @@ This analysis explores sales data to derive insights using various visualization
 ### Dataset Source and Description:
 The dataset used in this analysis was sourced from Kaggle, a popular platform for data science competitions and datasets. The dataset, titled Sales Forecasting, was downloaded directly using Kaggle’s API integration. It includes various details about sales transactions such as order dates, customer segments, sales amounts, and more.
 
-##Columns in the dataset:
+## Columns in the dataset:
 
 Order Date: The date when the order was placed.<br>
 Ship Date: The date when the order was shipped.<br>
