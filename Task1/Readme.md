@@ -45,6 +45,20 @@ Handling Missing Values: Missing values in 'Postal Code' were handled by using f
 
 The Exploratory Data Analysis (EDA) focuses on uncovering patterns, trends, and relationships within the dataset through visualizations and statistical summaries:
 
+```python
+
+# Sales by Customer Segment
+sales_by_segment = df.groupby('Segment')['Sales'].sum()
+# Sales by Product Category and Sub-Category
+sales_by_category = df.groupby('Category')['Sales'].sum()
+sales_by_sub_category = df.groupby('Sub-Category')['Sales'].sum().sort_values(ascending=False).head(10)
+# Sales by Shipping Mode
+sales_by_ship_mode = df.groupby('Ship Mode')['Sales'].sum()
+# Shipping Duration Calculation
+df['Shipping Duration'] = (df['Ship Date'] - df['Order Date']).dt.days
+avg_shipping_duration = df['Shipping Duration'].mean()
+
+```
 ### 1. Sales Over Time
 Type: Line Chart<br>
 Description: Displays the total sales amount over time, showing how sales vary by date.<br>
