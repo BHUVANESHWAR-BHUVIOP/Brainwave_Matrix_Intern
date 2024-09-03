@@ -41,6 +41,10 @@ zip.close()
 Date Conversion: Converted 'Order Date' and 'Ship Date' to datetime format for better time-based analysis.<br>
 Handling Missing Values: Missing values in 'Postal Code' were handled by using forward-fill (method='ffill') to ensure continuity in data.
 
+## Exploratory Data Analysis (EDA)
+
+The Exploratory Data Analysis (EDA) focuses on uncovering patterns, trends, and relationships within the dataset through visualizations and statistical summaries:
+
 ### 1. Sales Over Time
 Type: Line Chart<br>
 Description: Displays the total sales amount over time, showing how sales vary by date.<br>
