@@ -22,6 +22,20 @@ Install Kaggle API: Installed the Kaggle API client to enable downloading datase
 Authenticate Kaggle Account: Used a Kaggle API token to authenticate and access the dataset.<br>
 Download Dataset: Downloaded the train.csv file from the Kaggle dataset.
 
+```python
+!pip install kaggle
+import kaggle
+
+# Download the dataset from Kaggle
+!kaggle datasets download rohitsahoo/sales-forecasting -f train.csv
+
+# Unzip the dataset
+import zipfile
+zip = zipfile.ZipFile('train.csv.zip')
+zip.extractall()
+zip.close()
+```
+
 ### 1. Sales Over Time
 Type: Line Chart<br>
 Description: Displays the total sales amount over time, showing how sales vary by date.<br>
