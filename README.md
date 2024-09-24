@@ -11,6 +11,15 @@ The dataset contains transaction details from a retail store, including order an
 
 For a detailed analysis and visualizations, please refer to the attached Jupyter Notebook file.
 
+## Task 2:
+
+Social Media Sentiment Analysis
+
+### Description:
+
+Analyze social media data (e.g., Twitter) to understand public sentiment towards specific topics, products, or events. Use natural language processing (NLP) techniques to preprocess text data, extract sentiment scores, and visualize sentiment trends over time.
+
+For a detailed analysis and visualizations, please refer to the attached Jupyter Notebook file.
 
 ## Contact Information :
 
