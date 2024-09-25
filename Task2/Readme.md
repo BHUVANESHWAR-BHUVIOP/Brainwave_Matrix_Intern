@@ -58,7 +58,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 # Load the dataset
 # Replace 'your_dataset.csv' with the actual file name or path of your dataset
-twitter_data=pd.read_csv('/content/training.1600000.processed.noemoticon.csv',encoding='ISO-8859-1')```
+twitter_data=pd.read_csv('/content/training.1600000.processed.noemoticon.csv',encoding='ISO-8859-1')
+```
 ```python
 # Display the first few rows of the dataset to understand its structure
 twitter_data.head()
