@@ -15,12 +15,12 @@ This project involves processing and analyzing a sentiment dataset to understand
 The dataset used in this project was downloaded from Kaggle and contains a large number of processed tweets labeled as either positive or negative sentiments.
 
 ## Columns in the Dataset:
-Sentiment: Sentiment label (0 for negative, 1 for positive).
+Sentiment: Sentiment label (0 for negative, 1 for positive).</br>
 Text: The tweet content.
 
 ## Steps:
 #### 1. Data Processing
-Sentiment Mapping: The dataset contains two labels, 0 for negative tweets and 1 for positive tweets.
+Sentiment Mapping: The dataset contains two labels, 0 for negative tweets and 1 for positive tweets.</br>
 Text Cleaning: Performed text preprocessing including converting text to lowercase, removing special characters, and cleaning the text using regular expressions.
 
 #### 2. Stemming
@@ -30,16 +30,16 @@ Stemming Process: Reduced words to their root form using the PorterStemmer to st
 Train-Test Split: The data was split into training and testing datasets to evaluate the model's performance.
 
 #### 4.Model Training and Evaluation
-Model Used: Logistic Regression was employed to classify the sentiment of the tweets.
+Model Used: Logistic Regression was employed to classify the sentiment of the tweets.</br>
 Evaluation: The model's accuracy was measured to determine its effectiveness
 
 #### 5. Data Visualization
-Sentiment Distribution: Visualized the distribution of positive and negative sentiments in the dataset. This provides insights into the overall balance between positive and negative tweets.
-The dataset contains two sentiment classes: 0 (negative) and 1 (positive).
-A bar chart can be used to represent the distribution of these sentiment labels across the dataset.
-Sentiment Trends Over Time: Although the dataset focuses primarily on tweet content and sentiment, visualizing sentiment trends over time is possible by mapping tweets to specific periods (e.g., day or month, if timestamp data is available).
-Text-Based Analysis: Word cloud or bar charts can be employed to visualize the most frequent words in positive and negative tweets. This helps identify common themes or topics associated with different sentiment labels.
-Sentiment Classification Results: A confusion matrix can be plotted after the model evaluation to visualize the model’s performance in classifying sentiments. This gives a clear indication of false positives and false negatives, along with accurate predictions.
+Sentiment Distribution: Visualized the distribution of positive and negative sentiments in the dataset. This provides insights into the overall balance between positive and negative tweets.</br>
+The dataset contains two sentiment classes: 0 (negative) and 1 (positive).</br>
+A bar chart can be used to represent the distribution of these sentiment labels across the dataset.</br>
+Sentiment Trends Over Time: Although the dataset focuses primarily on tweet content and sentiment, visualizing sentiment trends over time is possible by mapping tweets to specific periods (e.g., day or month, if timestamp data is available).</br>
+Text-Based Analysis: Word cloud or bar charts can be employed to visualize the most frequent words in positive and negative tweets. This helps identify common themes or topics associated with different sentiment labels.</br>
+Sentiment Classification Results: A confusion matrix can be plotted after the model evaluation to visualize the model’s performance in classifying sentiments. This gives a clear indication of false positives and false negatives, along with accurate predictions.</br>
 
 
 
