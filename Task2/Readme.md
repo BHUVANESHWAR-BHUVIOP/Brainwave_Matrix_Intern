@@ -47,135 +47,134 @@ Sentiment Classification Results: A confusion matrix can be plotted after the mo
 
 ```python
 # Import necessary libraries
+import numpy as np
 import pandas as pd
+import re
+from nltk.corpus import stopwords
+from nltk.stem.porter import PorterStemmer
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
 # Load the dataset
 # Replace 'your_dataset.csv' with the actual file name or path of your dataset
-df = pd.read_csv('sentimentdataset.csv')
-```
+twitter_data=pd.read_csv('/content/training.1600000.processed.noemoticon.csv',encoding='ISO-8859-1')```
 ```python
 # Display the first few rows of the dataset to understand its structure
-print("Dataset Preview:")
-display(df.head())
+twitter_data.head()
 ```
-![1](https://github.com/user-attachments/assets/efabf105-7e06-4bc3-925e-1c3a4a1c3666)
+![Screenshot 2024-09-25 195321](https://github.com/user-attachments/assets/3ca50557-03bb-4c98-a823-bf8060c54a2e)
 
 ```python
-# Get basic information about the dataset (column names, data types, missing values)
-print("\nDataset Information:")
-df.info()
+#printing the stopwords in english
+print(stopwords.words('english'))
 ```
-![2](https://github.com/user-attachments/assets/105707ba-8443-4814-9b75-a084d19511df)
+![Screenshot 2024-09-25 195754](https://github.com/user-attachments/assets/c7908caf-c5b7-4a05-861f-e924ef888236)
+
+
 ```python
 # Check for missing values in each column
-print("\nMissing Values in Dataset:")
-print(df.isnull().sum())
+twitter_data.isnull().sum()
 ```
-![3](https://github.com/user-attachments/assets/c7349610-24b7-4149-8669-5c4daaaee066)
+![Screenshot 2024-09-25 195618](https://github.com/user-attachments/assets/4d1d99ae-67fa-40a3-88e1-d5f69869d835)
 
 ```python
-# Get a summary of numerical columns
-print("\nStatistical Summary of Numerical Columns:")
-display(df.describe())
+# stemming is the process of reducing a word to its root word
+def stemming(content):
+  stemmed_content=re.sub('[^a-zA-Z]',' ',content)
+  stemmed_content=stemmed_content.lower()
+  stemmed_content=stemmed_content.split()
+  stemmed_content=[port_stem.stem(word) for word in stemmed_content if not word in stopwords.words('english')]
+
+  return stemmed_content
+print(twitter_data['stemmed_content'])
+
 ```
-![4](https://github.com/user-attachments/assets/940ed593-7b7f-4a63-87d6-636309e0b3a1)
+![Screenshot 2024-09-25 200019](https://github.com/user-attachments/assets/7be28054-ec22-4c49-b266-a32cf185a5c9)
 
 
 ```python
-# Drop the unnecessary columns
-df_cleaned = df.drop(['Unnamed: 0', 'Unnamed: 0.1'], axis=1)
-
-# Remove leading/trailing spaces from 'Platform' column
-df_cleaned['Platform'] = df_cleaned['Platform'].str.strip()
-
-# Verify the changes
-print("Cleaned Unique Platforms in the Dataset:")
-print(df_cleaned['Platform'].unique())
-
-# Display the first few rows of the cleaned dataset
-display(df_cleaned.head())
+# splitting the data to training data and splitting data
+X_train,X_test,Y_train,Y_test=train_test_split(X,Y,test_size=0.2,stratify=Y,random_state=2)
+print(X.shape,X_train.shape,X_test.shape)
+print(X_train)
+print(X_test)
 ```
-![5](https://github.com/user-attachments/assets/7ceb4155-63ca-4918-a002-23bce33ba048)
+![Screenshot 2024-09-25 200249](https://github.com/user-attachments/assets/c71bf2ca-ab22-4d2a-a429-534409783ffc)
 
 ```python
-import spacy
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
-# Load spaCy's English model
-nlp = spacy.load('en_core_web_sm')
+# Example: Assuming `y_test` are the true labels and `y_pred` are the predictions
+Y_pred = model.predict(X_test)
+cm = confusion_matrix(Y_test, Y_pred)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm)
 
-# Function to preprocess text using spaCy
-def preprocess_text_spacy(text):
-    # Process text with spaCy
-    doc = nlp(text.lower())
-    # Remove stopwords, punctuation, and lemmatize tokens
-    words = [token.lemma_ for token in doc if not token.is_stop and not token.is_punct]
-    return ' '.join(words)
-
-# Apply the preprocessing to the 'Text' column
-df_cleaned['Cleaned_Text'] = df_cleaned['Text'].apply(preprocess_text_spacy)
-
-# Display the cleaned text data
-print("Sample of Cleaned Text Data (spaCy):")
-display(df_cleaned[['Text', 'Cleaned_Text']].head())
-```
-![6](https://github.com/user-attachments/assets/6bca9260-d6fe-4ffd-856d-3668906a8f02)
-
-```python
-# Plot the distribution of the new mapped sentiments
-plt.figure(figsize=(8, 6))
-sns.countplot(x='Mapped_Sentiment', data=df_cleaned, palette='coolwarm')
-plt.title('Distribution of Mapped Sentiments')
-plt.xlabel('Mapped Sentiment')
-plt.ylabel('Count')
+# Plot confusion matrix
+disp.plot(cmap='Blues')
+plt.title('Confusion Matrix')
 plt.show()
 
 ```
-![7](https://github.com/user-attachments/assets/235435c7-354a-438c-93dc-7bfc170eedfe)
+![Screenshot 2024-09-25 200355](https://github.com/user-attachments/assets/bfb8d1a3-5713-4e19-b5e4-50ed93282361)
 
 ```python
-# Plot sentiment distribution across platforms
 plt.figure(figsize=(10, 6))
-sns.countplot(x='Platform', hue='Mapped_Sentiment', data=df_cleaned, palette='coolwarm')
-plt.title('Sentiment Distribution Across Platforms')
-plt.xlabel('Platform')
-plt.ylabel('Count')
-plt.legend(title='Sentiment')
+plt.stem(top_features['feature'], top_features['importance'], linefmt='-', markerfmt='o', basefmt=" ", use_line_collection=True)
+plt.title('Top 20 Important TF-IDF Features')
+plt.xlabel('Feature')
+plt.ylabel('Importance')
+plt.xticks(rotation=45, ha='right')
 plt.show()
 
 ```
-![8](https://github.com/user-attachments/assets/be8cd232-d0fa-449d-bbba-fe01d2f2d61b)
+![Screenshot 2024-09-25 200446](https://github.com/user-attachments/assets/a000af52-f12b-4395-8db9-1f1a0f6f72d0)
 
 ```python
-# Sentiment trend over time (by Year and Month)
-df_cleaned['Date'] = pd.to_datetime(df_cleaned[['Year', 'Month', 'Day']])
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
 
-# Group by Date and Sentiment
-sentiment_trends = df_cleaned.groupby(['Date', 'Mapped_Sentiment']).size().unstack(fill_value=0)
+# Example: Assuming 'text' is the column with text data
+# Combine all text for visualization
+all_words = ' '.join(twitter_data['text'])
 
-# Plot the trend
-plt.figure(figsize=(12, 6))
-sentiment_trends.plot(kind='line', figsize=(12, 6), marker='o')
-plt.title('Sentiment Trend Over Time')
-plt.xlabel('Date')
-plt.ylabel('Number of Comments')
-plt.legend(title='Sentiment')
+# Generate a word cloud
+wordcloud = WordCloud(width=800, height=400, background_color='white').generate(all_words)
+
+# Display the word cloud
+plt.figure(figsize=(10, 5))
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis('off')
+plt.title('Most Common Words in Text Data')
 plt.show()
-
 ```
-![9](https://github.com/user-attachments/assets/d72dc647-4129-4d55-b4eb-aca9eb61bd21)
+![Screenshot 2024-09-25 200535](https://github.com/user-attachments/assets/126ed0f8-1520-4676-8a8f-dec7c68fbc8a)
 
 ```python
-# Plot sentiment distribution across countries
-plt.figure(figsize=(12, 8))
-sns.countplot(x='Country', hue='Mapped_Sentiment', data=df_cleaned, palette='coolwarm', order=df_cleaned['Country'].value_counts().index)
-plt.title('Sentiment Distribution Across Countries')
-plt.xlabel('Country')
-plt.ylabel('Count')
-plt.xticks(rotation=45)
-plt.legend(title='Sentiment')
+
+# Visualize the distribution of tweet lengths
+twitter_data['tweet_length'] = twitter_data['text'].apply(len)
+plt.figure(figsize=(10, 6))
+sns.histplot(twitter_data['tweet_length'], bins=50, kde=True)
+plt.title('Distribution of Tweet Lengths')
+plt.xlabel('Tweet Length')
+plt.ylabel('Frequency')
 plt.show()
 
 ```
-![10](https://github.com/user-attachments/assets/51b0a9d5-49cf-43d4-ba60-682766d6528e)
+![Screenshot 2024-09-25 200630](https://github.com/user-attachments/assets/ee93b72f-e657-423b-a85d-aa243a5242a9)
+
+```python
+# Create a bar chart
+sns.barplot(x=sentiment_counts.index, y=sentiment_counts.values, palette='viridis')
+plt.title('Distribution of Sentiments')
+plt.xlabel('Target')
+plt.ylabel('Count')
+plt.show()
+
+```
+![Screenshot 2024-09-25 200717](https://github.com/user-attachments/assets/bf381509-16e3-44e4-949c-b25c1a995f68)
+
 
 ## Applications
 
