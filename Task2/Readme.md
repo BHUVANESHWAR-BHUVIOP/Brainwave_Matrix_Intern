@@ -179,9 +179,9 @@ plt.show()
 
 ## Applications
 
-1.Public Sentiment Analysis: Analyzing tweets to gauge public sentiment on various topics.
-2.Text Preprocessing: Using stemming and text cleaning to prepare data for sentiment analysis models.
-3.Model Training: Training machine learning models on large sentiment datasets for accurate predictions.
+1.Public Sentiment Analysis: Analyzing tweets to gauge public sentiment on various topics.</br>
+2.Text Preprocessing: Using stemming and text cleaning to prepare data for sentiment analysis models.</br>
+3.Model Training: Training machine learning models on large sentiment datasets for accurate predictions.</br>
 
 
 ## Result:
